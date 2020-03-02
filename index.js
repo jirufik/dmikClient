@@ -1,8 +1,12 @@
-const serve = require('koa-static');
-const Koa = require('koa');
-const app = new Koa();
+const
+  express = require('express'),
+  serveStatic = require('serve-static'),
+  history = require('connect-history-api-fallback'),
+  port = process.env.PORT || 4020
 
-app.use(serve(__dirname + '/dist/spa'));
+const app = express()
 
-app.listen(4020);
+app.use(history())
+app.use(serveStatic(__dirname + '/dist/spa'))
+app.listen(port)
 
