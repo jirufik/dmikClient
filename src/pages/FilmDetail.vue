@@ -32,6 +32,7 @@
   import Film from "../components/Film/Film";
   import NotFound from "../components/common/NotFound";
   import FooterJirufik from "../components/common/FooterJirufik";
+  import wait from "../utils/wait";
 
   export default {
     name: "FilmDetail",
@@ -40,7 +41,7 @@
       this.$app.setTitle(this.$t('title.film', {name: ''}));
 
       const code = Number(pathExists(this, '$route.params.code', 0));
-      Promise.resolve().then(this.loadFilm({code}));
+      Promise.resolve().then(wait).then(this.loadFilm({code}));
 
     },
 

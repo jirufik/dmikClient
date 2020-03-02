@@ -47,6 +47,7 @@
   import getLastTimeFilm from "../utils/getLastTimeFilm";
   import NotFound from "../components/common/NotFound";
   import FooterJirufik from "../components/common/FooterJirufik";
+  import wait from "../utils/wait";
 
   export default {
     name: 'Poster',
@@ -57,6 +58,7 @@
 
       const offset = Number(pathExists(this, '$route.query.offset', 0));
       this.filter = this.fillFilter({offset});
+      Promise.resolve().then(wait);
 
       Promise.all([this.loadPosters(), this.loadFilms({offset})]);
 

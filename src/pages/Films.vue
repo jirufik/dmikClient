@@ -54,6 +54,7 @@
   import NotFound from "../components/common/NotFound";
   import toBoolean from "../utils/toBoolean";
   import FooterJirufik from "../components/common/FooterJirufik";
+  import wait from "../utils/wait";
 
   const LIMIT = 5;
 
@@ -66,6 +67,8 @@
 
       const filter = pathExists(this, '$route.query');
       this.fillFilter({filter});
+
+      Promise.resolve().then(wait);
 
       Promise.all([
         this.loadAges(),
