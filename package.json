@@ -1,0 +1,36 @@
+{
+  "name": "dev",
+  "version": "0.0.1",
+  "description": "A Quasar Framework app",
+  "productName": "dmikClientTest",
+  "cordovaId": "org.cordova.quasar.app",
+  "capacitorId": "",
+  "author": "rufus <rufus57@yandex.ru>",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.0.0",
+    "jrf-path-exists": "^1.0.4",
+    "jrfws2": "^1.0.2",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "quasar": "^1.0.0",
+    "vue-i18n": "^8.0.0",
+    "koa": "^2.11.0",
+    "koa-static": "^5.0.0"
+  },
+  "devDependencies": {
+    "@quasar/app": "^1.0.0"
+  },
+  "engines": {
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  },
+  "browserslist": [
+    "last 1 version, not dead, ie >= 11"
+  ]
+}
