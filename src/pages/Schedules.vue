@@ -53,8 +53,6 @@
 
       this.fillFilter({filter});
 
-      Promise.resolve()
-
       Promise.all([
         this.loadHalls(),
         this.loadTickets(),

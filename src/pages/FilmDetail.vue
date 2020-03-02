@@ -41,7 +41,7 @@
       this.$app.setTitle(this.$t('title.film', {name: ''}));
 
       const code = Number(pathExists(this, '$route.params.code', 0));
-      Promise.resolve().then(wait).then(this.loadFilm({code}));
+      Promise.resolve().then(this.loadFilm({code}));
 
     },
 

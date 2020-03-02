@@ -58,7 +58,6 @@
 
       const offset = Number(pathExists(this, '$route.query.offset', 0));
       this.filter = this.fillFilter({offset});
-      Promise.resolve().then(wait);
 
       Promise.all([this.loadPosters(), this.loadFilms({offset})]);
 

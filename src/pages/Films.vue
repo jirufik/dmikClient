@@ -68,8 +68,6 @@
       const filter = pathExists(this, '$route.query');
       this.fillFilter({filter});
 
-      Promise.resolve().then(wait);
-
       Promise.all([
         this.loadAges(),
         this.loadFilms({filter: this.filter})
