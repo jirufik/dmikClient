@@ -61,7 +61,7 @@
 
         const reset = {
           label: 'X',
-          selected: false,
+          selected: this.$q.dark.isActive,
           func: () => this.resetFilter()
         };
         buttons.push(reset);

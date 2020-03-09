@@ -25,6 +25,8 @@ export default {
   notFoundFilm: 'Фильм не найден',
   notFoundSchedule: 'Расписание не найдено',
   showMoreFilms: 'Показать еще',
+  darkMode: 'Тёмный режим',
+  lightMode: 'Светлый режим',
   mon: 'Пн',
   tue: 'Вт',
   wed: 'Ср',

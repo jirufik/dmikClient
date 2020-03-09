@@ -3,7 +3,7 @@
     :flat="!selected"
     :outline="selected"
     rounded
-    color="dark"
+    :color="color"
     :label="label"
     @click="func"
     class="shadow-1 q-ma-xs"
@@ -20,7 +20,15 @@
         default: false
       },
       func: Function
-    }
+    },
+    computed: {
+      isDarkMode() {
+        return this.$q.dark.isActive;
+      },
+      color() {
+        return this.isDarkMode ? 'white' : 'dark';
+      }
+    },
   }
 </script>
 

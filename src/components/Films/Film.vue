@@ -20,7 +20,8 @@
             <div
               class="text-h6 cursor-pointer"
               @click="openFilm"
-            >{{film.name}}</div>
+            >{{film.name}}
+            </div>
           </q-card-section>
           <q-card-section :class="classInfoFilm">
             <info-film :film="film"></info-film>
@@ -83,7 +84,7 @@
         const soon = pathExists(this, 'film.soon');
 
         if (!rental && !soon) return 'bg-blue';
-        else if (rental) return 'bg-yellow';
+        else if (rental) return this.$q.dark.isActive ? 'bg-yellow-10' : 'bg-yellow';
         else if (soon) return 'bg-green';
 
       },

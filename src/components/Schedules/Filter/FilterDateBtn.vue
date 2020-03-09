@@ -3,15 +3,15 @@
     :flat="!selected"
     :outline="selected"
     rounded
-    color="dark"
+    :color="color"
     :label="label"
     class="shadow-1 q-ma-xs"
   >
     <q-popup-proxy @before-show="updateProxy" transition-show="scale" transition-hide="scale">
       <q-date v-model="proxyDate" color="dark">
         <div class="row items-center justify-end q-gutter-sm">
-          <q-btn label="Cancel" color="dark" flat v-close-popup></q-btn>
-          <q-btn label="OK" color="dark" flat @click="save" v-close-popup></q-btn>
+          <q-btn label="Cancel" :color="color" flat v-close-popup></q-btn>
+          <q-btn label="OK" :color="color" flat @click="save" v-close-popup></q-btn>
         </div>
       </q-date>
     </q-popup-proxy>
@@ -40,6 +40,15 @@
       return {
         date: '2019/03/01',
         proxyDate: '2019/03/01'
+      }
+    },
+
+    computed: {
+      isDarkMode() {
+        return this.$q.dark.isActive;
+      },
+      color() {
+        return this.isDarkMode ? 'white' : 'dark';
       }
     },
 

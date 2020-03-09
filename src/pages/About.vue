@@ -6,7 +6,7 @@
       <div class="q-pa-md text-h4 text-center">Костафиша</div>
 
       <div class="q-pa-md text-body1">
-        В городе Костомукша есть кинозал, у кинозала есть официальнный сайт
+        В городе Костомукша есть кинозал, у кинозала есть официальный сайт
         <a href="http://www.dmik.ru" target="_blank">dmik.ru</a>
         который не совсем удобен в использовании на современных устройствах.
         Таким образом родилась идея создать данный проект, размять мозги и пальцы рук :)
@@ -33,13 +33,13 @@
         <span class="text-weight-bold"><a href="https://github.com/jirufik/dmikBackend"
                                           target="_blank">dmikBackend</a></span> - Backend сервис, который крутится на
         серваке где-то в дата
-        центре посреди Хельсинки. Передает предоставленную парсером инфу Клиент запущенному в браузере, на устройстве
+        центре посреди Хельсинки. Передает предоставленную парсером инфу Клиенту запущенному в браузере, на устройстве
         пользователя.
       </div>
 
       <div class="q-pa-md text-body2">
         <span class="text-weight-bold"><a href="https://github.com/jirufik/dmikClient"
-                                          target="_blank">dmikClient</a></span> - Frontend сервис, который запускается в
+                                          target="_blank">dmikClient</a></span> - Frontend сервис, который в
         браузере пользователя и предоставляет инфу с Backend сервиса, в доступном виде.
       </div>
 
@@ -79,19 +79,18 @@
 
     </div>
 
-    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn fab outline icon="keyboard_arrow_up" color="dark"></q-btn>
-    </q-page-scroller>
+    <scroll-up></scroll-up>
 
   </q-page>
 </template>
 
 <script>
   import FooterJirufik from "../components/common/FooterJirufik";
+  import ScrollUp from "../components/common/ScrollUp";
 
   export default {
     name: "About",
-    components: {FooterJirufik},
+    components: {ScrollUp, FooterJirufik},
     created() {
       this.$app.setTitle(this.$t('title.about'));
     }

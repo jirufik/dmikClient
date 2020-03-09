@@ -16,9 +16,7 @@
 
     </div>
 
-    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn fab outline icon="keyboard_arrow_up" color="dark"></q-btn>
-    </q-page-scroller>
+    <scroll-up></scroll-up>
 
   </q-page>
 </template>
@@ -33,6 +31,7 @@
   import FilterSchedule from "../components/Schedules/Filter/FilterSchedule";
   import {isEqual, cloneDeep} from "lodash";
   import FooterJirufik from "../components/common/FooterJirufik";
+  import ScrollUp from "../components/common/ScrollUp";
 
   export default {
     name: "Schedules",
@@ -185,7 +184,7 @@
 
     },
 
-    components: {FooterJirufik, FilterSchedule, ScheduleDate, NotFound}
+    components: {ScrollUp, FooterJirufik, FilterSchedule, ScheduleDate, NotFound}
 
   }
 

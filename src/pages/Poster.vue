@@ -28,9 +28,7 @@
 
     </div>
 
-    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn fab outline icon="keyboard_arrow_up" color="dark"></q-btn>
-    </q-page-scroller>
+    <scroll-up></scroll-up>
 
   </q-page>
 </template>
@@ -48,6 +46,7 @@
   import NotFound from "../components/common/NotFound";
   import FooterJirufik from "../components/common/FooterJirufik";
   import wait from "../utils/wait";
+  import ScrollUp from "../components/common/ScrollUp";
 
   export default {
     name: 'Poster',
@@ -164,6 +163,7 @@
     },
 
     components: {
+      ScrollUp,
       FooterJirufik,
       CarouselFilms,
       FilterLine,

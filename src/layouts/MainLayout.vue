@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="bg-white text-black">
+      <q-toolbar :class="classToolbar">
         <q-btn
           flat
           dense
@@ -22,7 +22,6 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-1"
     >
       <q-list bordered separator>
         <q-item to="/" exact>
@@ -43,6 +42,18 @@
         <q-item to="/about" exact>
           <q-item-section>
             <q-item-label>{{$t('title.about')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-toggle
+              class="justify-between"
+              :value="isDarkMode"
+              :label="labelMode"
+              left-label
+              :color="color"
+              @input="toggleDarkMode"
+            ></q-toggle>
           </q-item-section>
         </q-item>
       </q-list>
@@ -78,6 +89,28 @@
           }
         ]
       }
+    },
+
+    computed: {
+      isDarkMode() {
+        return this.$q.dark.isActive;
+      },
+      color() {
+        return this.isDarkMode ? 'white' : 'dark';
+      },
+      labelMode() {
+        return this.$t(this.isDarkMode ? 'lightMode' : 'darkMode');
+      },
+      classToolbar() {
+        return this.isDarkMode ? 'bg-dark text-white' : 'bg-white text-black';
+      }
+    },
+
+    methods: {
+      toggleDarkMode() {
+        this.$app.toggleDarkMode();
+      }
     }
+
   }
 </script>

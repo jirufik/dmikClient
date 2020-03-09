@@ -22,6 +22,7 @@
       >
         <q-btn
           rounded
+          :outline="$q.dark.isActive"
           @click="loadMoreFilms"
         >
           {{$t('showMoreFilms')}}
@@ -37,9 +38,7 @@
 
     </div>
 
-    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn fab outline icon="keyboard_arrow_up" color="dark"></q-btn>
-    </q-page-scroller>
+    <scroll-up></scroll-up>
 
   </q-page>
 </template>
@@ -55,6 +54,7 @@
   import toBoolean from "../utils/toBoolean";
   import FooterJirufik from "../components/common/FooterJirufik";
   import wait from "../utils/wait";
+  import ScrollUp from "../components/common/ScrollUp";
 
   const LIMIT = 5;
 
@@ -231,6 +231,7 @@
     },
 
     components: {
+      ScrollUp,
       FooterJirufik,
       Film,
       FilterFilms,

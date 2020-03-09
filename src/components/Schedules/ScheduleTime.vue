@@ -6,7 +6,7 @@
       @click="openFilm"
     >
 
-      <div class="q-ma-sm q-px-xs bg-yellow rounded-borders">
+      <div class="q-ma-sm q-px-xs rounded-borders" :class="color">
         {{timeTitle}}
       </div>
 
@@ -46,6 +46,9 @@
     computed: {
       timeTitle() {
         return moment(this.time.datetime).format('HH:mm');
+      },
+      color() {
+        return this.$q.dark.isActive ? 'bg-yellow-10' : 'bg-yellow';
       }
     },
 

@@ -4,7 +4,8 @@
     :class="classScheduleTime"
   >
     <div
-      class="q-ma-sm q-px-xs bg-yellow rounded-borders"
+      class="q-ma-sm q-px-xs rounded-borders"
+      :class="color"
       style="cursor: default;">
       {{time.time}}
       <q-tooltip>
@@ -87,6 +88,9 @@
       isBigScreen() {
         return this.ticket.hall.toLowerCase().includes('основной');
       },
+      color() {
+        return this.$q.dark.isActive ? 'bg-yellow-10' : 'bg-yellow';
+      }
     },
 
     components: {
