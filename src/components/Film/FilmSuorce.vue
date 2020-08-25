@@ -2,16 +2,6 @@
   <q-card-actions>
     <div class="q-ma-sm">{{$t('source')}}</div>
     <q-btn
-      v-if="showDMIK"
-      class="q-ma-sm"
-      flat
-      rounded
-      color="primary"
-      size="md"
-      @click="openDMIK"
-    >DMIK
-    </q-btn>
-    <q-btn
       v-if="showTMDb"
       class="q-ma-sm"
       flat
