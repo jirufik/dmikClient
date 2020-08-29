@@ -35,166 +35,172 @@
 
 <script>
 
-  import {Loading} from 'quasar'
-  import pathExists from 'jrf-path-exists'
-  import CarouselFilms from "../components/Poster/CarouselFilms/CarouselFilms";
-  import FilterLine from "../components/Poster/FilterLine/FilterLine";
-  import getDateLine from "../utils/getDateLine";
-  import moment from 'moment'
-  import PosterFilms from "../components/Poster/PosterFilms/PosterFilms";
-  import getLastTimeFilm from "../utils/getLastTimeFilm";
-  import NotFound from "../components/common/NotFound";
-  import FooterJirufik from "../components/common/FooterJirufik";
-  import wait from "../utils/wait";
-  import ScrollUp from "../components/common/ScrollUp";
+import {Loading} from 'quasar'
+import pathExists from 'jrf-path-exists'
+import CarouselFilms from "../components/Poster/CarouselFilms/CarouselFilms";
+import FilterLine from "../components/Poster/FilterLine/FilterLine";
+import getDateLine from "../utils/getDateLine";
+import moment from 'moment'
+import PosterFilms from "../components/Poster/PosterFilms/PosterFilms";
+import getLastTimeFilm from "../utils/getLastTimeFilm";
+import NotFound from "../components/common/NotFound";
+import FooterJirufik from "../components/common/FooterJirufik";
+import wait from "../utils/wait";
+import ScrollUp from "../components/common/ScrollUp";
+import getFirstTimeFilm from "src/utils/getFirstTimeFilm";
 
-  export default {
-    name: 'Poster',
+export default {
+  name: 'Poster',
 
-    created() {
+  created() {
 
-      this.$app.setTitle(this.$t('title.poster'));
+    this.$app.setTitle(this.$t('title.poster'));
 
-      const offset = Number(pathExists(this, '$route.query.offset', 0));
-      this.filter = this.fillFilter({offset});
+    const offset = Number(pathExists(this, '$route.query.offset', 0));
+    this.filter = this.fillFilter({offset});
 
-      Promise.all([this.loadPosters(), this.loadFilms({offset})]);
+    Promise.all([this.loadPosters(), this.loadFilms({offset})]);
 
+  },
+
+  beforeRouteUpdate(to, from, next) {
+
+    const offset = Number(pathExists(to, 'query.offset', 0));
+    this.filter = this.fillFilter({offset});
+    Promise.resolve().then(this.loadFilms({offset}));
+
+    next();
+  },
+
+  data() {
+    return {
+      posters: [],
+      films: [],
+      filter: []
+    }
+  },
+
+  computed: {
+    classFilterLine() {
+      const isMobile = this.$q.platform.is.mobile;
+      return isMobile ? 'filter-line__scroll' : 'filter-line';
     },
+    classFilterBox() {
+      const isMobile = this.$q.platform.is.mobile;
+      return isMobile ? 'filter-box__scroll' : 'filter-box';
+    }
+  },
 
-    beforeRouteUpdate(to, from, next) {
+  methods: {
 
-      const offset = Number(pathExists(to, 'query.offset', 0));
-      this.filter = this.fillFilter({offset});
-      Promise.resolve().then(this.loadFilms({offset}));
+    async selectFilter({label}) {
 
-      next();
-    },
+      let date = new Date();
+      let offset = 0;
 
-    data() {
-      return {
-        posters: [],
-        films: [],
-        filter: []
-      }
-    },
+      for (let i = 0; i < this.filter.length; i++) {
 
-    computed: {
-      classFilterLine() {
-        const isMobile = this.$q.platform.is.mobile;
-        return isMobile ? 'filter-line__scroll' : 'filter-line';
-      },
-      classFilterBox() {
-        const isMobile = this.$q.platform.is.mobile;
-        return isMobile ? 'filter-box__scroll' : 'filter-box';
-      }
-    },
+        const filter = this.filter[i];
+        filter.selected = false;
 
-    methods: {
-
-      async selectFilter({label}) {
-
-        let date = new Date();
-        let offset = 0;
-
-        for (let i = 0; i < this.filter.length; i++) {
-
-          const filter = this.filter[i];
-          filter.selected = false;
-
-          if (filter.label === label) {
-            filter.selected = true;
-            date = filter.date;
-            offset = i;
-          }
-
+        if (filter.label === label) {
+          filter.selected = true;
+          date = filter.date;
+          offset = i;
         }
 
-        const curOffset = Number(pathExists(this, '$router.currentRoute.query.offset', 0));
-        if (curOffset === offset) return;
+      }
 
-        await this.$router.push({query: {offset}});
+      const curOffset = Number(pathExists(this, '$router.currentRoute.query.offset', 0));
+      if (curOffset === offset) return;
 
-      },
+      await this.$router.push({query: {offset}});
 
-      fillFilter({offset}) {
+    },
 
-        const days = getDateLine({countDays: 8});
+    fillFilter({offset}) {
 
-        const filter = [];
-        for (let i = 0; i < days.length; i++) {
+      const days = getDateLine({countDays: 8});
 
-          const day = days[i];
+      const filter = [];
+      for (let i = 0; i < days.length; i++) {
 
-          filter.push({
-            label: day.label,
-            func: () => this.selectFilter({label: day.label}),
-            selected: i === offset
-          });
+        const day = days[i];
 
-        }
-
-        return filter;
-
-      },
-
-      async loadFilms({offset} = {}) {
-        Loading.show();
-
-        const date = moment().add(offset, 'days');
-
-        const res = await this.$jrfws.sendMes({route: 'films', act: 'get', data: {filter: {date}}, awaitRes: true});
-        const films = res || [];
-
-        this.films = films.filter(film => {
-          const lastTime = getLastTimeFilm(film);
-          return moment() < lastTime;
+        filter.push({
+          label: day.label,
+          func: () => this.selectFilter({label: day.label}),
+          selected: i === offset
         });
 
-        Loading.hide();
-
-      },
-
-      async loadPosters() {
-        const res = await this.$jrfws.sendMes({route: 'poster', awaitRes: true});
-        this.posters = res || [];
       }
+
+      return filter;
 
     },
 
-    components: {
-      ScrollUp,
-      FooterJirufik,
-      CarouselFilms,
-      FilterLine,
-      PosterFilms,
-      NotFound
+    async loadFilms({offset} = {}) {
+      Loading.show();
+
+      const date = moment().add(offset, 'days');
+
+      const res = await this.$jrfws.sendMes({route: 'films', act: 'get', data: {filter: {date}}, awaitRes: true});
+      let films = res || [];
+
+      films = films.filter(film => {
+        const lastTime = getLastTimeFilm(film);
+        film.firstTime = getFirstTimeFilm(film);
+        return moment() < lastTime;
+      });
+
+      this.films = films.sort((a, b) => {
+        return a.firstTime - b.firstTime;
+      });
+
+      Loading.hide();
+
+    },
+
+    async loadPosters() {
+      const res = await this.$jrfws.sendMes({route: 'poster', awaitRes: true});
+      this.posters = res || [];
     }
+
+  },
+
+  components: {
+    ScrollUp,
+    FooterJirufik,
+    CarouselFilms,
+    FilterLine,
+    PosterFilms,
+    NotFound
   }
+}
 
 </script>
 
 <style lang="sass">
 
-  .poster
-    .filter-box
-      &__scroll
-        overflow: hidden
-        height: 60px
+.poster
+  .filter-box
+    &__scroll
+      overflow: hidden
+      height: 60px
 
-    .filter-line
-      max-width: max-content
-      /*margin: auto*/
-      margin: 8px auto 8px auto
+  .filter-line
+    max-width: max-content
+    /*margin: auto*/
+    margin: 8px auto 8px auto
 
-      &__scroll
-        white-space: nowrap
-        overflow: auto
-        width: 100%
-        /*max-height: 100%*/
-        padding: 0 16px 45px 16px
-        overflow-y: hidden
-        margin-left: 0
-        margin-right: 0
+    &__scroll
+      white-space: nowrap
+      overflow: auto
+      width: 100%
+      /*max-height: 100%*/
+      padding: 0 16px 45px 16px
+      overflow-y: hidden
+      margin-left: 0
+      margin-right: 0
 
 </style>
